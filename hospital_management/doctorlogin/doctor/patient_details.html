@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Details</title>
+    <link rel="stylesheet" href="../doctor/doctor_dashboard.css">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Patient Details</h2>
+
+        <div class="section">
+            <h3>Past Appointments & Prescriptions</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Prescription</th>
+                    </tr>
+                </thead>
+                <tbody id="pastPrescriptions">
+                    <!-- Data will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h3>Add Prescription</h3>
+            <form id="prescriptionForm">
+                <input type="hidden" id="patientId" name="patientId">
+                
+                <label for="prescription">Prescription:</label>
+                <textarea id="prescription" name="prescription" required></textarea>
+
+                <button type="submit">Save Prescription</button>
+            </form>
+        </div>
+
+        <a href="doctor_dashboard.html">Back to Dashboard</a>
+    </div>
+
+    <script>
+        // Get patient ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const patientId = urlParams.get("patient");
+
+        document.getElementById("patientId").value = patientId;
+
+        // Fetch past prescriptions
+        function loadPastPrescriptions() {
+            fetch(`../doctor/get_patient_prescriptions.php?patient=${patientId}`)
+                .then(response => response.json())
+                .then(data => {
+                    let tableBody = document.getElementById("pastPrescriptions");
+                    tableBody.innerHTML = "";
+
+                    if (data.length === 0) {
+                        tableBody.innerHTML = "<tr><td colspan='2'>No past prescriptions</td></tr>";
+                        return;
+                    }
+
+                    data.forEach(record => {
+                        let row = `<tr>
+                            <td>${record.date}</td>
+                            <td>${record.prescription}</td>
+                        </tr>`;
+                        tableBody.innerHTML += row;
+                    });
+                })
+                .catch(error => console.error("Error fetching past prescriptions:", error));
+        }
+
+        // Handle prescription form submission
+        document.getElementById("prescriptionForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            let formData = new FormData(this);
+
+            fetch("../doctor/save_prescription.php", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);
+                loadPastPrescriptions(); // Refresh prescription history
+            })
+            .catch(error => console.error("Error saving prescription:", error));
+        });
+
+        // Load prescriptions when the page is ready
+        loadPastPrescriptions();
+    </script>
+
+</body>
+</html>

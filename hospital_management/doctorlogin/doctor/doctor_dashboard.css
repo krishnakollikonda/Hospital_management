@@ -1,0 +1,118 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container */
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Headings */
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+h3 {
+    color: #444;
+    margin-bottom: 10px;
+}
+
+/* Sections */
+.section {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    background: #f9f9f9;
+    border-left: 5px solid #007bff;
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+input {
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Button */
+button {
+    margin-top: 15px;
+    padding: 10px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background: #007bff;
+    color: white;
+}
+
+tr:hover {
+    background: #f1f1f1;
+}
+
+/* Links */
+a {
+    display: inline-block;
+    margin-top: 15px;
+    text-decoration: none;
+    background: #28a745;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+a:hover {
+    background: #218838;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .container {
+        width: 90%;
+    }
+
+    table {
+        font-size: 14px;
+    }
+}

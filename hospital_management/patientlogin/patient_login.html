@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Login</title>
+    <link rel="stylesheet" href="../patientlogin/patient_login.css">
+</head>
+<body>
+
+    <header>
+        <h1>Patient Login</h1>
+        <nav>
+            <a href="http://localhost/hospital_management/index.html" class="btn">Home</a>
+        </nav>
+    </header>
+
+    <section class="login-container">
+        <h2>Login to Patient Portal</h2>
+       
+        <form action="http://localhost/hospital_management/patientlogin/patient_login.php" method="POST">
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit" class="btn">Login</button>
+        </form>
+
+        
+        <p>Don't have an account? <a href="http://localhost/hospital_management/register/register.html">Register Here</a></p>
+
+    </section>
+
+</body>
+</html>

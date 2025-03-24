@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment</title>
+    <link rel="stylesheet" href="../patient/book_appoinment.css">
+</head>
+<body>
+
+    <div class="appointment-container">
+        <h2>Book an Appointment</h2>
+        <form id="appointmentForm" action="../patient/book_appointment.php" method="POST">
+            
+            <label for="specialty">Select Specialty:</label>
+            <select id="specialty" name="specialty" required onchange="fetchDoctors()">
+                <option value="">--Select--</option>
+                <option value="Orthopedic">Orthopedic</option>
+                <option value="Neurology">Neurology</option>
+                <option value="Psychiatry">Psychiatry</option>
+                <option value="Cardiology">Cardiology</option>
+            </select>
+
+            <label for="doctor">Select Doctor:</label>
+            <select id="doctor" name="doctor" required>
+                <option value="">Select Specialty First</option>
+            </select>
+
+            <label for="date">Appointment Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <button type="submit">Book Appointment</button>
+        </form>
+
+        <a href="../patient/appointment_history.html">View Appointment History</a>
+        <a href="../patient/prescription.html">View Prescriptions</a>
+        <a href="../patient/patient_dashboard.html">Back to Dashboard</a>
+    </div>
+
+    <script>
+        function fetchDoctors() {
+            let specialty = document.getElementById("specialty").value;
+            let doctorDropdown = document.getElementById("doctor");
+
+            doctorDropdown.innerHTML = '<option value="">Loading...</option>'; // Loading indicator
+
+            fetch(`../backend/fetch_doctors.php?specialty=${specialty}`)
+                .then(response => response.json())
+                .then(data => {
+                    doctorDropdown.innerHTML = '<option value="">--Select Doctor--</option>';
+                    data.forEach(doctor => {
+                        let option = document.createElement("option");
+                        option.value = doctor.id;
+                        option.textContent = doctor.name;
+                        doctorDropdown.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    doctorDropdown.innerHTML = '<option value="">Error loading doctors</option>';
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+
+</body>
+</html>

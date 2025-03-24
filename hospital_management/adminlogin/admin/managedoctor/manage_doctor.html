@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Doctors</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h2>Manage Doctors</h2>
+        <a href="admin_dashboard.html">Back to Dashboard</a>
+
+        <h3>Add New Doctor</h3>
+        <form id="addDoctorForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="specialization">Specialization:</label>
+            <input type="text" id="specialization" name="specialization" required>
+
+            <label for="contact">Contact:</label>
+            <input type="text" id="contact" name="contact" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <button type="submit">Add Doctor</button>
+        </form>
+
+        <h3>Doctor List</h3>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Specialization</th>
+                    <th>Contact</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="doctorTableBody">
+                <!-- Doctor records will be inserted here dynamically -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="../assets/manage_doctors.js"></script>
+</body>
+</html>

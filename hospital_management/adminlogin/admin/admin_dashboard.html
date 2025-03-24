@@ -1,0 +1,34 @@
+<!-- admin_dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Hospital Management</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h2>Admin Dashboard</h2>
+        <nav>
+            <ul>
+                <li><a href="manage_doctors.html">Manage Doctors</a></li>
+                <li><a href="manage_patients.html">Manage Patients</a></li>
+                
+                <li><a href="manage_staff.html">Manage Staff & Departments</a></li>
+              
+                <li><a href="inventory.html">Manage Inventory & Pharmacy</a></li>
+                <li><a href="../backend/logout.php">Logout</a></li>
+            </ul>
+        </nav>
+        <div class="dashboard-overview">
+            <div class="card">Total Patients: <span id="total-patients">0</span></div>
+            <div class="card">Total Doctors: <span id="total-doctors">0</span></div>
+            <div class="card">Total Appointments: <span id="total-appointments">0</span></div>
+            <div class="card">Available Beds: <span id="available-beds">0</span></div>
+            <div class="card">Inventory Stock: <span id="inventory-stock">0</span></div>
+        </div>
+    </div>
+    <script src="../assets/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment History</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+
+    <div class="history-container">
+        <h2>Your Appointment History</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Doctor</th>
+                    <th>Specialty</th>
+                </tr>
+            </thead>
+            <tbody id="appointmentList">
+                <!-- Appointments will be loaded here dynamically -->
+            </tbody>
+        </table>
+
+        <a href="patient_dashboard.html">Back to Dashboard</a>
+    </div>
+
+    <script>
+        fetch("../backend/fetch_appointments.php")
+            .then(response => response.json())
+            .then(data => {
+                let tableBody = document.getElementById("appointmentList");
+                tableBody.innerHTML = "";
+                data.forEach(appointment => {
+                    let row = `<tr>
+                        <td>${appointment.date}</td>
+                        <td>${appointment.doctor}</td>
+                        <td>${appointment.specialty}</td>
+                    </tr>`;
+                    tableBody.innerHTML += row;
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard</title>
+    <link rel="stylesheet" href="../doctor/doctor_dashboard.css">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Doctor Dashboard</h2>
+
+        <!-- Update Availability Section -->
+        <div class="section">
+            <h3>Update Availability</h3>
+            <form id="availabilityForm">
+                <label for="availableDate">Date:</label>
+                <input type="date" id="availableDate" name="availableDate" required>
+
+                <label for="availableTime">Time Slot:</label>
+                <input type="time" id="availableTime" name="availableTime" required>
+
+                <button type="submit">Update Availability</button>
+            </form>
+        </div>
+
+        <!-- Patient Queue -->
+        <div class="section">
+            <h3>Patient Queue</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Illness</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="patientQueue">
+                    <!-- Patients will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Past Appointments & Prescriptions -->
+        <div class="section">
+            <h3>Past Appointments & Prescriptions</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Patient Name</th>
+                        <th>Prescription</th>
+                    </tr>
+                </thead>
+                <tbody id="pastAppointments">
+                    <!-- Data will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+
+        <a href="../doctor/logout.html">Logout</a>
+    </div>
+
+    <script>
+        // Fetch patient queue
+        function loadPatientQueue() {
+            fetch("../doctor/get_patient_queue.php")
+                .then(response => response.json())
+                .then(data => {
+                    let tableBody = document.getElementById("patientQueue");
+                    tableBody.innerHTML = "";
+
+                    if (data.length === 0) {
+                        tableBody.innerHTML = "<tr><td colspan='3'>No patients in queue</td></tr>";
+                        return;
+                    }
+
+                    data.forEach(patient => {
+                        let row = `<tr>
+                            <td>${patient.name}</td>
+                            <td>${patient.illness}</td>
+                            <td>
+                                <a href="../doctor/patient_details.html?patient=${patient.id}" class="button">View Details</a>
+                            </td>
+                        </tr>`;
+                        tableBody.innerHTML += row;
+                    });
+                })
+                .catch(error => console.error("Error fetching patient queue:", error));
+        }
+
+        // Fetch past appointments
+        function loadPastAppointments() {
+            fetch("../doctor/get_past_appointments.php")
+                .then(response => response.json())
+                .then(data => {
+                    let tableBody = document.getElementById("pastAppointments");
+                    tableBody.innerHTML = "";
+
+                    if (data.length === 0) {
+                        tableBody.innerHTML = "<tr><td colspan='3'>No past appointments found</td></tr>";
+                        return;
+                    }
+
+                    data.forEach(appointment => {
+                        let row = `<tr>
+                            <td>${appointment.date}</td>
+                            <td>${appointment.patient_name}</td>
+                            <td>${appointment.prescription || "No prescription given"}</td>
+                        </tr>`;
+                        tableBody.innerHTML += row;
+                    });
+                })
+                .catch(error => console.error("Error fetching past appointments:", error));
+        }
+
+        // Handle availability form submission
+        document.getElementById("availabilityForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            let formData = new FormData(this);
+
+            fetch("../doctor/update_availability.php", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);
+                loadPatientQueue(); // Refresh the queue
+            })
+            .catch(error => console.error("Error updating availability:", error));
+        });
+
+        // Load data when the page is ready
+        loadPatientQueue();
+        loadPastAppointments();
+    </script>
+
+</body>
+</html>

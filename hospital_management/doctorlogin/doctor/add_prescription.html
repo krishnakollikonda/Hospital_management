@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Prescription</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Add Prescription</h2>
+        <form id="prescriptionForm">
+            <input type="hidden" id="patientId" name="patientId">
+
+            <label for="prescription">Prescription:</label>
+            <textarea id="prescription" name="prescription" required></textarea>
+
+            <button type="submit">Save Prescription</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const patientId = urlParams.get("patient");
+
+            if (patientId) {
+                document.getElementById("patientId").value = patientId;
+            }
+
+            document.getElementById("prescriptionForm").addEventListener("submit", function(e) {
+                e.preventDefault();
+                let formData = new FormData(this);
+
+                fetch("../backend/save_prescription.php", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.text())
+                .then(data => {
+                    alert(data);
+                    window.location.href = "doctor_dashboard.html";
+                })
+                .catch(error => console.error("Error:", error));
+            });
+        });
+    </script>
+
+</body>
+</html>
